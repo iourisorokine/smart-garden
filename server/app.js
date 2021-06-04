@@ -81,7 +81,6 @@ app.locals.title = "Express React app";
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 
 // ROUTES MIDDLEWARE STARTS HERE:
-
 const index = require("./routes/index");
 app.use("/", index);
 

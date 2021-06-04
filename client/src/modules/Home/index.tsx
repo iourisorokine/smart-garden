@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Vegetables } from "../Vegetables";
 import { Garden } from "../Garden";
+import { Button } from "evergreen-ui";
 
 const wrapperStyle = {
   maxWidth: 900,
@@ -12,16 +13,6 @@ const wrapperStyle = {
 
 const headerStyle = {
   padding: 20,
-};
-
-const buttonStyle = {
-  flex: 1,
-  alignItems: "center",
-  justifyContent: "center",
-  margin: 20,
-  padding: "0px 10px",
-  border: "solid 2px #7a7",
-  borderRadius: 8,
 };
 
 const views = {
@@ -36,12 +27,26 @@ export const Home: React.FC = () => {
       <div style={headerStyle}>
         <h1>Welcome to Smart Garden</h1>
       </div>
-      <div style={{ display: "flex", flex: 1 }}>
-        <div style={buttonStyle} onClick={() => setView(views.VEGES)}>
-          <h2>Legumes</h2>
+      <div style={{ display: "flex", flex: 1, padding: 10 }}>
+        <div style={{ padding: 10 }}>
+          <Button
+            size="large"
+            appearance={view === views.VEGES ? "primary" : "default"}
+            border="greenyellow"
+            // background="green"
+            onClick={() => setView(views.VEGES)}>
+            <h3>Legumes</h3>
+          </Button>
         </div>
-        <div style={buttonStyle} onClick={() => setView(views.GARDEN)}>
-          <h2>Jardin</h2>
+        <div style={{ padding: 10 }}>
+          <Button
+            size="large"
+            appearance={view === views.GARDEN ? "primary" : "default"}
+            border="greenyellow"
+            // background="green"
+            onClick={() => setView(views.GARDEN)}>
+            <h3>Jardin</h3>
+          </Button>
         </div>
       </div>
       {view === views.VEGES && <Vegetables />}

@@ -1,29 +1,38 @@
 import React, { useState } from "react";
 import { VegListItem } from "./VegListItem";
+import { AddNewVegButton } from "./AddNewVegButton";
+import { VegDetails } from "./VegDetails";
 
 const vegListStyle = {
   padding: 20,
   display: "flex",
 };
 
-const vegetablesToDisplay = ["+ Add", "🌶", "🌽", "🍅", "🥕", "🍆"];
+const vegetablesToDisplay = ["", "🌶", "🌽", "🍅", "🥕", "🍆"];
 
 export const Vegetables: React.FC = () => {
   const [selectedVeg, setSelectedVeg] = useState<string | null>(null);
-  const vegetablesList = vegetablesToDisplay.map((item) => (
-    <VegListItem vegName={item} setSelectedVeg={setSelectedVeg} />
-  ));
+  const [isCreateVegView, setIsCreateVegView] = useState<boolean>(false);
+
+  const createNewVeg = () => setIsCreateVegView(true);
+  const vegetablesList = vegetablesToDisplay.map((item, index) => {
+    if (index === 0)
+      return <AddNewVegButton createNewVegHandler={createNewVeg} />;
+    return <VegListItem vegName={item} setSelectedVeg={setSelectedVeg} />;
+  });
   return (
     <div>
-      {!selectedVeg ? (
-        <div style={vegListStyle}>{vegetablesList}</div>
-      ) : (
-        <div style={vegListStyle}>
-          <h3>Fiche {selectedVeg} detaillee</h3>
-          <div onClick={() => setSelectedVeg(null)}>
+      {isCreateVegView ? (
+        <div>
+          <h3>Creer Nouvelle Fiche Legume</h3>
+          <div onClick={() => setIsCreateVegView(false)}>
             <h3>fermer</h3>
           </div>
         </div>
+      ) : !selectedVeg ? (
+        <div style={vegListStyle}>{vegetablesList}</div>
+      ) : (
+        <VegDetails selectedVeg={selectedVeg} setSelectedVeg={setSelectedVeg} />
       )}
     </div>
   );
