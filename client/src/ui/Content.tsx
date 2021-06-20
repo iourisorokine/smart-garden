@@ -12,16 +12,17 @@ export interface ContentProps {
 }
 
 export const Content = styled.div`
-  padding: ${(props: ContentProps) => props.padding ?? "8px"};
+  padding: ${(props: ContentProps) => props.padding ?? 0};
   padding-top: ${(props: ContentProps) =>
-    props.paddingTop ?? props.padding ?? "8px"};
+    props.paddingTop ?? props.padding ?? 0};
   padding-bottom: ${(props: ContentProps) =>
-    props.paddingBottom ?? props.padding ?? "8px"};
+    props.paddingBottom ?? props.padding ?? 0};
   padding-left: ${(props: ContentProps) =>
-    props.paddingLeft ?? props.padding ?? "8px"};
+    props.paddingLeft ?? props.padding ?? 0};
   padding-right: ${(props: ContentProps) =>
-    props.paddingRight ?? props.padding ?? "8px"};
+    props.paddingRight ?? props.padding ?? 0};
   display: flex;
+  flex: 1;
   width: calc(100%-padding-border);
   flex-direction: ${(props: ContentProps) => props.flexDirection ?? "column"};
   align-items: ${(props: ContentProps) => props.alignItems ?? "flex-start"};

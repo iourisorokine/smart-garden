@@ -84,6 +84,9 @@ app.locals.title = "Express React app";
 const index = require("./routes/index");
 app.use("/", index);
 
+const vegetableRoutes = require("./routes/vegetable");
+app.use("/api/vegetable", vegetableRoutes);
+
 // If no routes match, react html is sent
 app.use((req, res) => {
   res.sendFile(__dirname + "/client/public/index.html");

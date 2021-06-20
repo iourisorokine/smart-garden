@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Vegetables } from "../Vegetables";
 import { Garden } from "../Garden";
-import { Button } from "evergreen-ui";
+import { Button } from "@material-ui/core";
 
 const wrapperStyle = {
   maxWidth: 900,
@@ -30,20 +30,16 @@ export const Home: React.FC = () => {
       <div style={{ display: "flex", flex: 1, padding: 10 }}>
         <div style={{ padding: 10 }}>
           <Button
-            size="large"
-            appearance={view === views.VEGES ? "primary" : "default"}
-            border="greenyellow"
-            // background="green"
+            color={view === views.VEGES ? "primary" : "default"}
+            variant="outlined"
             onClick={() => setView(views.VEGES)}>
             <h3>Legumes</h3>
           </Button>
         </div>
         <div style={{ padding: 10 }}>
           <Button
-            size="large"
-            appearance={view === views.GARDEN ? "primary" : "default"}
-            border="greenyellow"
-            // background="green"
+            color={view === views.GARDEN ? "primary" : "default"}
+            variant="outlined"
             onClick={() => setView(views.GARDEN)}>
             <h3>Jardin</h3>
           </Button>

@@ -1,16 +1,21 @@
-import * as mongoose from "mongoose";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-enum EventName {
-  PLANTING = "PLANTING", // plantage
-  SEED = "SEED", // semis
-  CLEAR = "CLEAR", // eclaircissement (retirer les pousses)
-  CUTTING = "CUTTING", // taille
-  HARVEST = "HARVEST", // recolte
-}
+// const EventName = {
+//   PLANTING = "PLANTING", // plantage
+//   SEED = "SEED", // semis en pleine terre
+//   CLEAR = "CLEAR", // eclaircissement (retirer les pousses)
+//   PRUNING = "PRUNING", // taille
+//   HARVEST = "HARVEST", // recolte
+// }
+
+const eventNames = ["PLANT", "SEED", "CLEAR", "PRUNE", "HARVEST"];
 
 const KeyDateSchema = new Schema({
-  eventName: EventName,
+  eventName: {
+    type: String,
+    enum: eventNames,
+  },
   description: String,
   earliest: Date,
   latest: Date,
@@ -18,7 +23,8 @@ const KeyDateSchema = new Schema({
     differenceInDays: Number,
     toEvent: {
       type: String,
-      enum: Object.values(EventName),
+      enum: eventNames,
+      // enum: Object.values(EventName),
     },
   },
 });
@@ -49,4 +55,5 @@ const VegetableSchema = new Schema({
   wateringFrequencyDays: Number,
 });
 
-export const Vegetable = mongoose.model("Vegetable", VegetableSchema);
+const Vegetable = mongoose.model("Vegetable", VegetableSchema);
+module.exports = Vegetable;

@@ -11,11 +11,13 @@ export const VegDetails: React.FC<VegDetailProps> = ({
   setSelectedVeg,
 }) => {
   return (
-    <Content flexDirection="row" justifyContent="space-between">
-      <h3>Fiche {selectedVeg} detaillee</h3>
-      <div onClick={() => setSelectedVeg(null)}>
-        <h3>x</h3>
-      </div>
-    </Content>
+    <div>
+      <Content flexDirection="row" justifyContent="space-between">
+        <h3>Fiche {selectedVeg} detaillee</h3>
+        <div onClick={() => setSelectedVeg(null)}>
+          <h3>x</h3>
+        </div>
+      </Content>
+    </div>
   );
 };
