@@ -1,5 +1,5 @@
 import React, { useState, useEffect, SetStateAction } from "react";
-import { Content } from "../../ui";
+import { Content } from "../../../ui";
 import axios from "axios";
 import {
   FormControl,
@@ -13,7 +13,7 @@ import {
   eventNameTranslation,
   indexToMonth,
   KeyDate,
-} from "./types";
+} from "../types";
 import { KeyDateDisplay } from "./KeyDate";
 
 export interface AddNewVegFormProps {
@@ -88,7 +88,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   };
 
   const createVegDoc = async () => {
-    const newlyCreatedVeg = await axios.post("api/vegetable", {
+    await axios.post("api/vegetable", {
       name: vegName,
       emoji: vegEmoji,
       spacing: {

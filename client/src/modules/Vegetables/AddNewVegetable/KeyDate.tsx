@@ -4,7 +4,7 @@ import {
   eventNameTranslation,
   indexToMonth,
   KeyDate,
-} from "./types";
+} from "../types";
 
 export interface KeyDateDisplayProps {
   date: KeyDate;

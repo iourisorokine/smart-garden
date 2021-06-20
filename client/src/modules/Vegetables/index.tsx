@@ -3,14 +3,12 @@ import axios from "axios";
 import { VegListItem } from "./VegListItem";
 import { AddNewVegButton } from "./AddNewVegButton";
 import { VegDetails } from "./VegDetails";
-import { AddNewVegForm } from "./AddNewVegForm";
+import { AddNewVegForm } from "./AddNewVegetable/AddNewVegForm";
 
 const vegListStyle = {
   padding: 20,
   display: "flex",
 };
-
-const vegetablesToDisplay = ["", "🌶", "🌽", "🍅", "🥕", "🍆"];
 
 export const Vegetables: React.FC = () => {
   const [selectedVeg, setSelectedVeg] = useState<string | null>(null);
