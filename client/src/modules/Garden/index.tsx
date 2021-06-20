@@ -5,9 +5,12 @@ export const Garden: React.FC = () => {
     <div
       style={{
         padding: 20,
-        display: "flex",
       }}>
-      <h2>Vue du jardin ici</h2>
+      <h2>Jardin</h2>
+      <p>
+        Page en construction - ça va venir - avec plan des parcelles et contenus
+        de chacune d'elles
+      </p>
     </div>
   );
 };

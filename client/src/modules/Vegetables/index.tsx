@@ -11,7 +11,7 @@ const vegListStyle = {
 };
 
 export const Vegetables: React.FC = () => {
-  const [selectedVeg, setSelectedVeg] = useState<string | null>(null);
+  const [selectedVeg, setSelectedVeg] = useState<any>(null);
   const [isCreateVegView, setIsCreateVegView] = useState<boolean>(false);
   const [vegetablesToDisplay, setVegetablesToDisplay] = useState<any[]>([""]);
 
@@ -32,9 +32,14 @@ export const Vegetables: React.FC = () => {
 
   const createNewVeg = () => setIsCreateVegView(true);
   const vegetablesList = vegetablesToDisplay.map((item, index) => {
+    const selectCurrentVeg = () => {
+      setSelectedVeg(item);
+    };
     if (index === 0)
       return <AddNewVegButton createNewVegHandler={createNewVeg} />;
-    return <VegListItem vegName={item.name} setSelectedVeg={setSelectedVeg} />;
+    return (
+      <VegListItem vegName={item.name} selectCurrentVeg={selectCurrentVeg} />
+    );
   });
   return (
     <div>

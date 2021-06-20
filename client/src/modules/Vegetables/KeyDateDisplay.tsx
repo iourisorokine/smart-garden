@@ -1,17 +1,16 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import {
-  eventNameTranslation,
-  indexToMonth,
-  KeyDate,
-} from "../types";
+import { eventNameTranslation, indexToMonth, KeyDate } from "./types";
 
 export interface KeyDateDisplayProps {
   date: KeyDate;
-  deleteKeyDate: () => void;
+  deleteKeyDate?: () => void;
 }
 
-export const KeyDateDisplay: React.FC<KeyDateDisplayProps> = ({ date, deleteKeyDate }) => {
+export const KeyDateDisplay: React.FC<KeyDateDisplayProps> = ({
+  date,
+  deleteKeyDate,
+}) => {
   const getMonthsIntervalDescription = (earliest: number, latest: number) => {
     const monthsArray = Object.values(indexToMonth);
     if (earliest === latest) {
@@ -54,9 +53,11 @@ export const KeyDateDisplay: React.FC<KeyDateDisplayProps> = ({ date, deleteKeyD
             {date.calculationMethod ? getDifferenceToDateDescription() : null}
           </div>
         </div>
-        <Button style={{ height: 32, minWidth: 32 }} onClick={deleteKeyDate}>
-          x
-        </Button>
+        {!!deleteKeyDate && (
+          <Button style={{ height: 32, minWidth: 32 }} onClick={deleteKeyDate}>
+            x
+          </Button>
+        )}
       </div>
     </div>
   );

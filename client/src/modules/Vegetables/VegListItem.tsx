@@ -1,12 +1,13 @@
 import React, { CSSProperties, SetStateAction, Dispatch } from "react";
+import { Button } from "@material-ui/core";
 
-const vegListStyle = {
-  height: 60,
-  width: 80,
+export const vegListStyle = {
+  minHeight: 60,
+  minWidth: 80,
   margin: 10,
   padding: 10,
-  border: "solid 2px #7a7",
-  borderRadius: 8,
+  borderColor: "#7a7",
+  borderRadius: 4,
   display: "flex",
   flexDirection: "column" as CSSProperties["flexDirection"],
   alignItems: "center",
@@ -16,23 +17,30 @@ const vegListStyle = {
 interface VegListItemProps {
   vegName: string;
   vegEmoji?: string;
-  setSelectedVeg: Dispatch<SetStateAction<string | null>>;
+  selectCurrentVeg: () => void;
 }
 
 export const VegListItem: React.FC<VegListItemProps> = ({
   vegName,
   vegEmoji,
-  setSelectedVeg,
+  selectCurrentVeg,
 }) => {
-  const onClickHandler = () => {
-    setSelectedVeg(vegName);
-  };
   return (
-    <div style={vegListStyle} onClick={onClickHandler}>
-      {<h1 style={{ padding: 0, margin: 0 }}>{vegEmoji || "🍅"}</h1>}
-      {!!vegName && (
-        <p style={{ padding: 0, margin: 0, textAlign: "center" }}>{vegName}</p>
-      )}
-    </div>
+    <Button variant="outlined" style={vegListStyle} onClick={selectCurrentVeg}>
+      <div>
+        {<h1 style={{ padding: 0, margin: 0 }}>{vegEmoji || "🍅"}</h1>}{" "}
+        {!!vegName && (
+          <p
+            style={{
+              padding: 0,
+              margin: 0,
+              textAlign: "center",
+              textTransform: "none",
+            }}>
+            {vegName}
+          </p>
+        )}
+      </div>
+    </Button>
   );
 };

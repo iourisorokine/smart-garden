@@ -14,7 +14,7 @@ import {
   indexToMonth,
   KeyDate,
 } from "../types";
-import { KeyDateDisplay } from "./KeyDate";
+import { KeyDateDisplay } from "../KeyDateDisplay";
 
 export interface AddNewVegFormProps {
   setIsCreateVegView: (v: React.SetStateAction<boolean>) => void;
@@ -145,7 +145,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
               EventName.HARVEST,
             ].map((eventName) => {
               return (
-                <option value={eventName}>
+                <option value={eventName} key={eventName}>
                   {eventNameTranslation[eventName]}
                 </option>
               );
@@ -169,7 +169,11 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
             onChange={(e) => setEarliestDateMonth(Number(e.target.value))}
             value={earliestDateMonth}>
             {Object.values(indexToMonth).map((month, index) => {
-              return <option value={index}>{month}</option>;
+              return (
+                <option key={index} value={index}>
+                  {month}
+                </option>
+              );
             })}
           </Select>
         </FormControl>
@@ -181,7 +185,11 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
             onChange={(e) => setLatestDateMonth(Number(e.target.value))}
             value={latestDateMonth}>
             {Object.values(indexToMonth).map((month, index) => {
-              return <option value={index}>{month}</option>;
+              return (
+                <option key={index} value={index}>
+                  {month}
+                </option>
+              );
             })}
           </Select>
         </FormControl>
@@ -216,7 +224,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
               EventName.HARVEST,
             ].map((eventName) => {
               return (
-                <option value={eventName}>
+                <option key={eventName} value={eventName}>
                   {eventNameTranslation[eventName]}
                 </option>
               );

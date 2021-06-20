@@ -1,12 +1,13 @@
-import React, { SetStateAction, Dispatch } from "react";
+import React from "react";
+import { Button } from "@material-ui/core";
 
 const vegListStyle = {
-  height: 60,
-  width: 80,
+  minHeight: 60,
+  minWidth: 80,
   margin: 10,
   padding: 10,
-  border: "solid 2px #7a7",
-  borderRadius: 8,
+  borderColor: "#7a7",
+  borderRadius: 4,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -23,8 +24,8 @@ export const AddNewVegButton: React.FC<AddNewVegButtonProps> = ({
     createNewVegHandler();
   };
   return (
-    <div style={vegListStyle} onClick={onClickHandler}>
-      <h2>+ Add</h2>
-    </div>
+    <Button variant="outlined" style={vegListStyle} onClick={onClickHandler}>
+      <h4 style={{ textTransform: "none" }}>+ Ajouter</h4>
+    </Button>
   );
 };

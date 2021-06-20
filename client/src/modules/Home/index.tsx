@@ -25,7 +25,7 @@ export const Home: React.FC = () => {
   return (
     <div style={wrapperStyle}>
       <div style={headerStyle}>
-        <h1>Welcome to Smart Garden</h1>
+        <h1>Bienvenue a Smart Jardin!</h1>
       </div>
       <div style={{ display: "flex", flex: 1, padding: 10 }}>
         <div style={{ padding: 10 }}>
