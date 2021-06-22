@@ -17,8 +17,8 @@ const KeyDateSchema = new Schema({
     enum: eventNames,
   },
   description: String,
-  earliest: Date,
-  latest: Date,
+  earliest: Number,
+  latest: Number,
   calculationMethod: {
     differenceInDays: Number,
     toEvent: {

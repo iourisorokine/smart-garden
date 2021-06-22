@@ -38,7 +38,11 @@ export const Vegetables: React.FC = () => {
     if (index === 0)
       return <AddNewVegButton createNewVegHandler={createNewVeg} />;
     return (
-      <VegListItem vegName={item.name} selectCurrentVeg={selectCurrentVeg} />
+      <VegListItem
+        vegName={item.name}
+        vegEmoji={item.emoji}
+        selectCurrentVeg={selectCurrentVeg}
+      />
     );
   });
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction } from "react";
+import React, { useState, useEffect } from "react";
 import { Content } from "../../../ui";
 import axios from "axios";
 import {
@@ -8,13 +8,9 @@ import {
   Button,
   Select,
 } from "@material-ui/core";
-import {
-  EventName,
-  eventNameTranslation,
-  indexToMonth,
-  KeyDate,
-} from "../types";
+import { EventName, KeyDate } from "../types";
 import { KeyDateDisplay } from "../KeyDateDisplay";
+import { AddKeyDateForm } from "./AddKeyDateForm";
 
 export interface AddNewVegFormProps {
   setIsCreateVegView: (v: React.SetStateAction<boolean>) => void;
@@ -24,6 +20,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   setIsCreateVegView,
 }) => {
   const [vegName, setVegName] = useState<string>("");
+  const [vegDescription, setVegDescription] = useState<string>("");
   const [vegEmoji, setVegEmoji] = useState<string>("");
   const [spacingBetweenPlants, setSpacingBetweenPlants] = useState("0");
   const [spacingBetweenLines, setSpacingBetweenLines] = useState("0");
@@ -42,7 +39,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   const [latestDateMonth, setLatestDateMonth] = useState(0);
   const [numberDaysLater, setNumberDaysLater] = useState(0);
   const [referenceEventForKeyDate, setReferenceEventForKeyDate] = useState(
-    EventName.SEED
+    EventName.PLANT
   );
 
   useEffect(() => {
@@ -65,15 +62,18 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   };
 
   const addKeyDate = () => {
+    const calculationMethod = !!numberDaysLater
+      ? {
+          differenceInDays: numberDaysLater,
+          toEvent: referenceEventForKeyDate,
+        }
+      : undefined;
     const newKeyDate = {
       eventName: newKeyDateEventType,
       description: newEventDescription,
       earliest: earliestDateMonth,
       latest: latestDateMonth,
-      calculationMethod: {
-        differenceInDays: numberDaysLater,
-        toEvent: referenceEventForKeyDate,
-      },
+      calculationMethod,
     };
     const updatedKeyDates = keyDates.concat([newKeyDate]);
     setKeyDates(updatedKeyDates);
@@ -90,6 +90,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   const createVegDoc = async () => {
     await axios.post("api/vegetable", {
       name: vegName,
+      description: vegDescription,
       emoji: vegEmoji,
       spacing: {
         betweenPlantsM: Number(spacingBetweenPlants),
@@ -113,135 +114,6 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
       </div>
     </Button>
   );
-
-  const AddKeyDateForm: React.FC = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          margin: 12,
-          padding: 12,
-          border: "1px black solid",
-          borderRadius: 4,
-        }}>
-        <h4>Nouvelle date clé:</h4>
-        <FormControl>
-          <InputLabel id="helper10" htmlFor="my-input10">
-            Type:
-          </InputLabel>
-          <Select
-            onChange={(e) =>
-              setNewKeyDateEventType(
-                e.target.value as SetStateAction<EventName>
-              )
-            }
-            value={newKeyDateEventType}>
-            {[
-              EventName.SEED,
-              EventName.PLANT,
-              EventName.PRUNE,
-              EventName.CLEAR,
-              EventName.HARVEST,
-            ].map((eventName) => {
-              return (
-                <option value={eventName} key={eventName}>
-                  {eventNameTranslation[eventName]}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="my-input11">Description:</InputLabel>
-          <Input
-            id="my-input11"
-            aria-describedby="my-helper-text11"
-            value={newEventDescription}
-            onChange={(e) => setNewEventDescription(e.target.value)}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel id="helper12" htmlFor="my-input12">
-            Au plus tôt en:
-          </InputLabel>
-          <Select
-            onChange={(e) => setEarliestDateMonth(Number(e.target.value))}
-            value={earliestDateMonth}>
-            {Object.values(indexToMonth).map((month, index) => {
-              return (
-                <option key={index} value={index}>
-                  {month}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel id="helper12" htmlFor="my-input12">
-            Au plus tard en:
-          </InputLabel>
-          <Select
-            onChange={(e) => setLatestDateMonth(Number(e.target.value))}
-            value={latestDateMonth}>
-            {Object.values(indexToMonth).map((month, index) => {
-              return (
-                <option key={index} value={index}>
-                  {month}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="my-input13">
-            {"(Optionnel) nombre de jours"}
-          </InputLabel>
-          <Input
-            id="my-input13"
-            aria-describedby="my-helper-text13"
-            type="number"
-            value={numberDaysLater}
-            onChange={(e) => setNumberDaysLater(Number(e.target.value))}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel id="helper10" htmlFor="my-input10">
-            apres l'évennement suivant:
-          </InputLabel>
-          <Select
-            onChange={(e) =>
-              setReferenceEventForKeyDate(
-                e.target.value as SetStateAction<EventName>
-              )
-            }
-            value={referenceEventForKeyDate}>
-            {[
-              EventName.SEED,
-              EventName.PLANT,
-              EventName.PRUNE,
-              EventName.CLEAR,
-              EventName.HARVEST,
-            ].map((eventName) => {
-              return (
-                <option key={eventName} value={eventName}>
-                  {eventNameTranslation[eventName]}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <div style={{ display: "flex", justifyContent: "center", padding: 12 }}>
-          <Button variant="outlined" onClick={addKeyDate}>
-            Ajouter
-          </Button>
-          <Button variant="outlined" onClick={() => setIsAddKeyDateView(false)}>
-            Annuler
-          </Button>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div>
@@ -284,10 +156,35 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
             onChange={(e) =>
               setVegEmoji((e.target.value as unknown) as string)
             }>
-            {["", "🌶", "🌽", "🍅", "🥕", "🍆"].map((emoji) => {
+            {[
+              "",
+              "🌶",
+              "🌽",
+              "🍅",
+              "🥕",
+              "🍆",
+              "🥬",
+              "🧅",
+              "🥦",
+              "🍇",
+              "🥔",
+              "🥒",
+              "🧄",
+              " 🍉",
+              "🍈",
+            ].map((emoji) => {
               return <option value={emoji}>{emoji}</option>;
             })}
           </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="my-input111">Description du legume</InputLabel>
+          <Input
+            id="my-input111"
+            aria-describedby="my-helper-text111"
+            value={vegDescription}
+            onChange={(e) => setVegDescription(e.target.value)}
+          />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="my-input3">
@@ -363,7 +260,26 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
           />
         </FormControl>
         <h4>Dates clé:</h4>
-        {isAddKeyDateView ? <AddKeyDateForm /> : <AddKeyDateButton />}
+        {isAddKeyDateView ? (
+          <AddKeyDateForm
+            newKeyDateEventType={newKeyDateEventType}
+            setNewKeyDateEventType={setNewKeyDateEventType}
+            newEventDescription={newEventDescription}
+            setNewEventDescription={setNewEventDescription}
+            earliestDateMonth={earliestDateMonth}
+            setEarliestDateMonth={setEarliestDateMonth}
+            latestDateMonth={latestDateMonth}
+            setLatestDateMonth={setLatestDateMonth}
+            numberDaysLater={numberDaysLater}
+            setNumberDaysLater={setNumberDaysLater}
+            referenceEventForKeyDate={referenceEventForKeyDate}
+            setReferenceEventForKeyDate={setReferenceEventForKeyDate}
+            addKeyDate={addKeyDate}
+            setIsAddKeyDateView={setIsAddKeyDateView}
+          />
+        ) : (
+          <AddKeyDateButton />
+        )}
         {keyDates.map((date, index) => (
           <KeyDateDisplay
             key={index}
