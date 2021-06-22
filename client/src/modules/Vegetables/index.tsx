@@ -22,13 +22,12 @@ export const Vegetables: React.FC = () => {
         if (data) {
           setVegetablesToDisplay(["", ...data]);
         }
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
     loadVeges();
-  }, [isCreateVegView]);
+  }, [isCreateVegView, selectedVeg]);
 
   const createNewVeg = () => setIsCreateVegView(true);
   const vegetablesList = vegetablesToDisplay.map((item, index) => {

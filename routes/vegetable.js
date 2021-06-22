@@ -14,11 +14,19 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, emoji, spacing, harvest, wateringFrequencyDays, keyDates } =
-    req.body;
+  const {
+    name,
+    description,
+    emoji,
+    spacing,
+    harvest,
+    wateringFrequencyDays,
+    keyDates,
+  } = req.body;
   try {
     const newVeg = await Vegetable.create({
       name,
+      description,
       emoji,
       spacing,
       harvest,
@@ -37,7 +45,7 @@ router.delete("/:id", async (req, res) => {
     throw new Error("no id was provided");
   }
   try {
-    await Vegetable.deleteOne({ id });
+    await Vegetable.findByIdAndDelete(id);
     res.json({ message: "Successfully deleted one vegetable data" });
   } catch (error) {
     res.json(err);

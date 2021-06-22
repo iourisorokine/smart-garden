@@ -12,12 +12,12 @@ export const VegDetails: React.FC<VegDetailProps> = ({
   selectedVeg,
   setSelectedVeg,
 }) => {
-  console.log(selectedVeg);
-  const deleteVeg = () => {
+  const deleteVeg = async () => {
     const id = selectedVeg._id;
     if (id) {
-      axios.delete(`/:${id}`);
+      await axios.delete(`api/vegetable/${id}`);
     }
+    setSelectedVeg(null);
   };
   return (
     <div style={{ paddingLeft: 24, paddingRight: 24 }}>
@@ -25,14 +25,17 @@ export const VegDetails: React.FC<VegDetailProps> = ({
         style={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           padding: 24,
         }}>
+        <h1>{selectedVeg.emoji}</h1>
         <h3>Fiche {selectedVeg.name} detaillee</h3>
         <Button
           variant="outlined"
+          size="small"
           onClick={() => setSelectedVeg(null)}
-          style={{ margin: 12 }}>
-          fermer
+          style={{ margin: 12, padding: 4 }}>
+          x
         </Button>
       </div>
       <p>{selectedVeg.description}</p>
@@ -47,6 +50,9 @@ export const VegDetails: React.FC<VegDetailProps> = ({
       )}
       {!!selectedVeg.wateringFrequencyDays && (
         <p>{`Frequence d'arrosage: tous les ${selectedVeg.wateringFrequencyDays} jours`}</p>
+      )}
+      {!!selectedVeg.harvest.minKilos && (
+        <p>{`Chaque plant fournit une recolte de ${selectedVeg.harvest.minKilos} KG mini et ${selectedVeg.harvest.maxKilos} KG maxi`}</p>
       )}
       <div style={{ maxWidth: 500, margin: "auto" }}>
         {(selectedVeg.keyDates as []).map((item) => (
