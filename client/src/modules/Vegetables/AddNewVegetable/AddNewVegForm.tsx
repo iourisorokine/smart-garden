@@ -12,6 +12,15 @@ import { EventName, KeyDate } from "../types";
 import { KeyDateDisplay } from "../KeyDateDisplay";
 import { AddKeyDateForm } from "./AddKeyDateForm";
 
+export interface AddKeyDateArgs {
+  newKeyDateEventType: EventName;
+  newEventDescription: string;
+  earliestDateMonth: number;
+  latestDateMonth: number;
+  numberDaysLater?: number;
+  referenceEventForKeyDate: EventName;
+}
+
 export interface AddNewVegFormProps {
   setIsCreateVegView: (v: React.SetStateAction<boolean>) => void;
 }
@@ -30,17 +39,6 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
   const [wateringFrequency, setWateringFrequency] = useState("0");
   const [keyDates, setKeyDates] = useState<KeyDate[]>([]);
   const [isAddKeyDateView, setIsAddKeyDateView] = useState<boolean>(false);
-
-  const [newKeyDateEventType, setNewKeyDateEventType] = useState<EventName>(
-    EventName.SEED
-  );
-  const [newEventDescription, setNewEventDescription] = useState<string>("");
-  const [earliestDateMonth, setEarliestDateMonth] = useState(0);
-  const [latestDateMonth, setLatestDateMonth] = useState(0);
-  const [numberDaysLater, setNumberDaysLater] = useState(0);
-  const [referenceEventForKeyDate, setReferenceEventForKeyDate] = useState(
-    EventName.PLANT
-  );
 
   useEffect(() => {
     const calculatedSpacePerPlant = (
@@ -61,7 +59,14 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
     }
   };
 
-  const addKeyDate = () => {
+  const addKeyDate = ({
+    newKeyDateEventType,
+    newEventDescription,
+    earliestDateMonth,
+    latestDateMonth,
+    numberDaysLater,
+    referenceEventForKeyDate,
+  }: AddKeyDateArgs) => {
     const calculationMethod = !!numberDaysLater
       ? {
           differenceInDays: numberDaysLater,
@@ -262,18 +267,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
         <h4>Dates clé:</h4>
         {isAddKeyDateView ? (
           <AddKeyDateForm
-            newKeyDateEventType={newKeyDateEventType}
-            setNewKeyDateEventType={setNewKeyDateEventType}
-            newEventDescription={newEventDescription}
-            setNewEventDescription={setNewEventDescription}
-            earliestDateMonth={earliestDateMonth}
-            setEarliestDateMonth={setEarliestDateMonth}
-            latestDateMonth={latestDateMonth}
-            setLatestDateMonth={setLatestDateMonth}
-            numberDaysLater={numberDaysLater}
-            setNumberDaysLater={setNumberDaysLater}
-            referenceEventForKeyDate={referenceEventForKeyDate}
-            setReferenceEventForKeyDate={setReferenceEventForKeyDate}
+            keyDates={keyDates}
             addKeyDate={addKeyDate}
             setIsAddKeyDateView={setIsAddKeyDateView}
           />

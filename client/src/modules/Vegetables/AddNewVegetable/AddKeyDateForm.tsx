@@ -1,4 +1,4 @@
-import React, { SetStateAction, Dispatch } from "react";
+import React, { useState, SetStateAction, Dispatch } from "react";
 import {
   FormControl,
   InputLabel,
@@ -6,50 +6,58 @@ import {
   Button,
   Select,
 } from "@material-ui/core";
-import { EventName, eventNameTranslation, indexToMonth } from "../types";
+import {
+  EventName,
+  eventNameTranslation,
+  indexToMonth,
+  KeyDate,
+} from "../types";
+import { AddKeyDateArgs } from "./AddNewVegForm";
 
 export interface AddKeyDateFormProps {
-  newKeyDateEventType: EventName;
-  setNewKeyDateEventType: Dispatch<SetStateAction<EventName>>;
-  newEventDescription: string;
-  setNewEventDescription: Dispatch<SetStateAction<string>>;
-  earliestDateMonth: number;
-  setEarliestDateMonth: Dispatch<SetStateAction<number>>;
-  latestDateMonth: number;
-  setLatestDateMonth: Dispatch<SetStateAction<number>>;
-  numberDaysLater: number;
-  setNumberDaysLater: Dispatch<SetStateAction<number>>;
-  referenceEventForKeyDate: EventName;
-  setReferenceEventForKeyDate: Dispatch<SetStateAction<EventName>>;
-  addKeyDate: () => void;
+  keyDates: KeyDate[];
+  addKeyDate: (args: AddKeyDateArgs) => void;
   setIsAddKeyDateView: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AddKeyDateForm: React.FC<AddKeyDateFormProps> = ({
-  newKeyDateEventType,
-  setNewKeyDateEventType,
-  newEventDescription,
-  setNewEventDescription,
-  earliestDateMonth,
-  setEarliestDateMonth,
-  latestDateMonth,
-  setLatestDateMonth,
-  numberDaysLater,
-  setNumberDaysLater,
-  referenceEventForKeyDate,
-  setReferenceEventForKeyDate,
+  keyDates,
   addKeyDate,
   setIsAddKeyDateView,
 }) => {
-  console.log(earliestDateMonth, latestDateMonth);
+  const [newKeyDateEventType, setNewKeyDateEventType] = useState<EventName>(
+    EventName.SEED
+  );
+  const [newEventDescription, setNewEventDescription] = useState<string>("");
+  const [earliestDateMonth, setEarliestDateMonth] = useState(0);
+  const [latestDateMonth, setLatestDateMonth] = useState(0);
+  const [numberDaysLater, setNumberDaysLater] = useState(0);
+  const [referenceEventForKeyDate, setReferenceEventForKeyDate] = useState<
+    EventName
+  >(EventName.PLANT);
+
+  const handleOnAddKeyDateClick = () => {
+    addKeyDate({
+      newKeyDateEventType,
+      newEventDescription,
+      earliestDateMonth,
+      latestDateMonth,
+      numberDaysLater,
+      referenceEventForKeyDate,
+    });
+  };
+
+  const alreadyCreatedEvents = keyDates.length
+    ? keyDates.map((date) => date.eventName)
+    : [];
+
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        margin: 12,
         padding: 12,
-        border: "1px black solid",
+        border: "1px #777 solid",
         borderRadius: 4,
       }}>
       <h4>Nouvelle date clé:</h4>
@@ -119,18 +127,20 @@ export const AddKeyDateForm: React.FC<AddKeyDateFormProps> = ({
           })}
         </Select>
       </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="my-input15">
-          {"(Optionnel) nombre de jours apres un autre évennement"}
-        </InputLabel>
-        <Input
-          id="my-input15"
-          aria-describedby="my-helper-text15"
-          type="number"
-          value={numberDaysLater}
-          onChange={(e) => setNumberDaysLater(Number(e.target.value))}
-        />
-      </FormControl>
+      {!!keyDates.length && (
+        <FormControl>
+          <InputLabel htmlFor="my-input15">
+            {"(Optionnel) nombre de jours apres un autre évennement"}
+          </InputLabel>
+          <Input
+            id="my-input15"
+            aria-describedby="my-helper-text15"
+            type="number"
+            value={numberDaysLater}
+            onChange={(e) => setNumberDaysLater(Number(e.target.value))}
+          />
+        </FormControl>
+      )}
 
       {!!numberDaysLater && (
         <FormControl>
@@ -140,19 +150,13 @@ export const AddKeyDateForm: React.FC<AddKeyDateFormProps> = ({
           <Select
             onChange={(e) =>
               setReferenceEventForKeyDate(
-                e.target.value as SetStateAction<EventName>
+                (e.target.value as unknown) as EventName
               )
             }
             value={referenceEventForKeyDate}>
-            {[
-              EventName.SEED,
-              EventName.PLANT,
-              EventName.PRUNE,
-              EventName.CLEAR,
-              EventName.HARVEST,
-            ].map((eventName) => {
+            {alreadyCreatedEvents.map((eventName, index) => {
               return (
-                <option key={eventName} value={eventName}>
+                <option key={index} value={eventName}>
                   {eventNameTranslation[eventName]}
                 </option>
               );
@@ -161,7 +165,7 @@ export const AddKeyDateForm: React.FC<AddKeyDateFormProps> = ({
         </FormControl>
       )}
       <div style={{ display: "flex", justifyContent: "center", padding: 12 }}>
-        <Button variant="outlined" onClick={addKeyDate}>
+        <Button variant="outlined" onClick={handleOnAddKeyDateClick}>
           Ajouter
         </Button>
         <Button variant="outlined" onClick={() => setIsAddKeyDateView(false)}>
