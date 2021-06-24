@@ -133,7 +133,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
           variant="outlined"
           onClick={() => setIsCreateVegView(false)}
           style={{ margin: 12 }}>
-          fermer
+          x
         </Button>
       </div>
       <div

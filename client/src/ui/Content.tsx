@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "@material-ui/core";
 
 export interface ContentProps {
   padding?: number;
@@ -27,4 +28,17 @@ export const Content = styled.div`
   flex-direction: ${(props: ContentProps) => props.flexDirection ?? "column"};
   align-items: ${(props: ContentProps) => props.alignItems ?? "flex-start"};
   justify-content: ${(props: ContentProps) => props.justifyContent ?? "center"};
+`;
+
+export const VegListItem = styled(Button)`
+  min-height: 60px;
+  min-width: 80px;
+  margin: 10px;
+  padding: 10px;
+  border-color: #7a7;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

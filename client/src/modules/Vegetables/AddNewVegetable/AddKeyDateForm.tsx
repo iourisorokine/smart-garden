@@ -165,12 +165,16 @@ export const AddKeyDateForm: React.FC<AddKeyDateFormProps> = ({
         </FormControl>
       )}
       <div style={{ display: "flex", justifyContent: "center", padding: 12 }}>
-        <Button variant="outlined" onClick={handleOnAddKeyDateClick}>
-          Ajouter
-        </Button>
-        <Button variant="outlined" onClick={() => setIsAddKeyDateView(false)}>
-          Annuler
-        </Button>
+        <div style={{ padding: 12 }}>
+          <Button variant="outlined" onClick={handleOnAddKeyDateClick}>
+            Ajouter
+          </Button>
+        </div>
+        <div style={{ padding: 12 }}>
+          <Button variant="outlined" onClick={() => setIsAddKeyDateView(false)}>
+            Annuler
+          </Button>
+        </div>
       </div>
     </div>
   );

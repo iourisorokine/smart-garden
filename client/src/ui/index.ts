@@ -1,1 +1,1 @@
-export { Content } from "./Content";
+export { Content, VegListItem } from "./Content";
