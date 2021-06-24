@@ -22,12 +22,12 @@ const ParcelSchema = new Schema({
     widthM: Number,
     surfaceSQM: Number,
   },
-  plantsOnParcel: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "PlantOnParcel",
-    },
-  ],
+  // plantsOnParcel: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "PlantOnParcel",
+  //   },
+  // ],
 });
 
 const Parcel = mongoose.model("Parcel", ParcelSchema);

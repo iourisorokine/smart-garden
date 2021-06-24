@@ -87,6 +87,9 @@ app.use("/", index);
 const vegetableRoutes = require("./routes/vegetable");
 app.use("/api/vegetable", vegetableRoutes);
 
+const parcelRoutes = require("./routes/parcel");
+app.use("/api/parcel", parcelRoutes);
+
 // If no routes match, react html is sent
 app.use((req, res) => {
   res.sendFile(__dirname + "/client/public/index.html");
