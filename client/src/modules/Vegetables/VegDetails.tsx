@@ -38,23 +38,26 @@ export const VegDetails: React.FC<VegDetailProps> = ({
           x
         </Button>
       </div>
-      <p>{selectedVeg.description}</p>
-      {!!selectedVeg.spacing.betweenPlantsM && (
-        <p>{`Espace entre les plants: ${selectedVeg.spacing.betweenPlantsM} m`}</p>
-      )}
-      {!!selectedVeg.spacing.betweenLinesM && (
-        <p>{`Espace entre les lignes: ${selectedVeg.spacing.betweenLinesM} m`}</p>
-      )}
-      {!!selectedVeg.spacing.necessarySpaceSqm && (
-        <p>{`Espace total par plant necessaire: ${selectedVeg.spacing.necessarySpaceSqm} m2`}</p>
-      )}
-      {!!selectedVeg.wateringFrequencyDays && (
-        <p>{`Frequence d'arrosage: tous les ${selectedVeg.wateringFrequencyDays} jours`}</p>
-      )}
-      {!!selectedVeg.harvest.minKilos && (
-        <p>{`Chaque plant fournit une recolte de ${selectedVeg.harvest.minKilos} KG mini et ${selectedVeg.harvest.maxKilos} KG maxi`}</p>
-      )}
       <div style={{ maxWidth: 500, margin: "auto" }}>
+        <p>{selectedVeg.description}</p>
+        {!!selectedVeg.spacing.betweenPlantsM && (
+          <p>{`Espace entre les plants: ${selectedVeg.spacing.betweenPlantsM} m`}</p>
+        )}
+        {!!selectedVeg.spacing.betweenLinesM && (
+          <p>{`Espace entre les lignes: ${selectedVeg.spacing.betweenLinesM} m`}</p>
+        )}
+        {!!selectedVeg.spacing.necessarySpaceSqm && (
+          <p>{`Espace total par plant necessaire: ${selectedVeg.spacing.necessarySpaceSqm} m2`}</p>
+        )}
+        {!!selectedVeg.wateringFrequencyDays && (
+          <p>{`Frequence d'arrosage: tous les ${selectedVeg.wateringFrequencyDays} jours`}</p>
+        )}
+        {!!selectedVeg.harvest.minKilos && (
+          <p>{`Chaque plant fournit une recolte entre ${selectedVeg.harvest.minKilos} et ${selectedVeg.harvest.maxKilos} KG`}</p>
+        )}
+      </div>
+      <div style={{ maxWidth: 500, margin: "auto" }}>
+        <h4>Dates clé:</h4>
         {(selectedVeg.keyDates as []).map((item) => (
           <KeyDateDisplay date={item} />
         ))}

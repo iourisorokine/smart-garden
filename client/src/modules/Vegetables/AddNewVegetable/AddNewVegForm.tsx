@@ -100,7 +100,7 @@ export const AddNewVegForm: React.FC<AddNewVegFormProps> = ({
       spacing: {
         betweenPlantsM: Number(spacingBetweenPlants),
         betweenLinesM: Number(spacingBetweenLines),
-        necessarySpaceSqm: Number(necessarySpacePerPlant),
+        necessarySpaceSqM: Number(necessarySpacePerPlant),
       },
       harvest: {
         minKilos: Number(minHarvest),
