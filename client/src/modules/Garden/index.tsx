@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@material-ui/core";
 
@@ -8,14 +8,27 @@ const parcelStyle = {
   margin: 4,
   border: "solid 1px black",
   borderRadius: 4,
-  width: 200,
-  height: 200,
+  width: 120,
+  height: 120,
 };
 
 export const Garden: React.FC = () => {
+  const [parcelsToDisplay, setParcelsToDisplay] = useState([]);
+
+  const loadParcels = async () => {
+    const allParcels = await axios.get("api/parcel/");
+    if (allParcels?.data?.length) {
+      setParcelsToDisplay(allParcels.data);
+    }
+  };
+
+  useEffect(() => {
+    loadParcels();
+  }, []);
+
   const addParcel = async () => {
-    const response = await axios.post("api/parcel/", {});
-    console.log(response);
+    await axios.post("api/parcel/", {});
+    loadParcels();
   };
 
   return (
@@ -30,12 +43,12 @@ export const Garden: React.FC = () => {
       </p>
       <div>
         <Button variant="outlined" onClick={addParcel}>
-          Ajouter
+          Ajouter Parcelle
         </Button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {emptyParcels.map((item) => {
-          return <div style={parcelStyle} />;
+        {parcelsToDisplay.map((item, index) => {
+          return <div key={index} style={parcelStyle} />;
         })}
       </div>
     </div>
